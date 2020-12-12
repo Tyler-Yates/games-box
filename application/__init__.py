@@ -1,6 +1,6 @@
 import logging
 
-from flask import Flask, Blueprint, render_template
+from flask import Flask, Blueprint, render_template, request, redirect
 from flask_socketio import SocketIO
 
 from application.games.crosswordcreator.data.game_manager import CrosswordCreatorGameManager
@@ -58,12 +58,24 @@ def _setup_crossword_creator(app: Flask):
     app.register_blueprint(crossword_creator_blueprint, url_prefix="/crossword_creator/")
 
 
+def _setup_app(app: Flask):
+    app.register_blueprint(main_blueprint, url_prefix="/")
+    app.config["SEND_FILE_MAX_AGE_DEFAULT"] = 60
+
+    @app.before_request
+    def before_request():
+        if request.url.startswith('http://'):
+            url = request.url.replace('http://', 'https://', 1)
+            code = 301
+            r = redirect(url, code=code)
+            return r
+
+
 def create_flask_app() -> Flask:
     # Create the flask app
     app = Flask(__name__)
 
-    app.register_blueprint(main_blueprint, url_prefix="/")
-    app.config["SEND_FILE_MAX_AGE_DEFAULT"] = 60
+    _setup_app(app)
 
     _setup_scrambled_words(app)
     _setup_hidden_names(app)
