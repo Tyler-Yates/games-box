@@ -3,7 +3,8 @@ import logging
 from flask import Flask, Blueprint, render_template
 from flask_socketio import SocketIO
 
-from .games.scrambledwords.data.game_manager import GameManager
+from .games.scrambledwords.data.game_manager import ScrambledWordsGameManager
+from .games.hiddennames.data.game_manager import HiddenNamesGameManager
 from .games.common.word_manager import WordManager
 
 SCRAMBLED_WORDS_GAME_MANAGER_CONFIG_KEY = "sw_game_manager"
@@ -28,7 +29,7 @@ def index():
 def setup_scrambled_words(app: Flask):
     scrambled_words_word_manager = WordManager(word_file_path="scrambledwords/words.txt")
     LOG.info(f"Loaded {scrambled_words_word_manager.num_words()} words for Scrambled Words game")
-    app.config[SCRAMBLED_WORDS_GAME_MANAGER_CONFIG_KEY] = GameManager(scrambled_words_word_manager)
+    app.config[SCRAMBLED_WORDS_GAME_MANAGER_CONFIG_KEY] = ScrambledWordsGameManager(scrambled_words_word_manager)
 
     from application.games.scrambledwords.networking import scrambled_words_blueprint as scrambled_words_blueprint
 
@@ -38,7 +39,7 @@ def setup_scrambled_words(app: Flask):
 def setup_hidden_names(app: Flask):
     hidden_names_word_manager = WordManager(word_file_path="hiddennames/words.txt")
     LOG.info(f"Loaded {hidden_names_word_manager.num_words()} words for Hidden Names game")
-    app.config[SCRAMBLED_WORDS_GAME_MANAGER_CONFIG_KEY] = GameManager(hidden_names_word_manager)
+    app.config[HIDDEN_NAMES_GAME_MANAGER_CONFIG_KEY] = HiddenNamesGameManager(hidden_names_word_manager)
 
     from application.games.hiddennames.networking import hidden_names_blueprint as hidden_names_blueprint
 

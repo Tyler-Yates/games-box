@@ -7,10 +7,10 @@ $(document).ready(function () {
 
     socket.on('connect', function () {
         console.log('Webhook initiated');
-        socket.emit('join', {'room': roomName});
+        socket.emit('hn-join', {'room': roomName});
     });
 
-    socket.on('game_update', function (data) {
+    socket.on('hn-game_update', function (data) {
         console.log(data);
 
         update_team_information(data.game_state);
@@ -20,7 +20,7 @@ $(document).ready(function () {
         });
     });
 
-    socket.on('reload_page', function (data) {
+    socket.on('hn-reload_page', function (data) {
         console.log(data);
 
         window.location.reload(true);
@@ -42,13 +42,13 @@ function add_button_event_listeners(socket, roomName) {
         const inputId = `${event.target.id}-input`;
         const inputElement = document.getElementById(inputId);
 
-        socket.emit('guess', {'room': roomName, 'guess': inputElement.value});
+        socket.emit('hn-guess', {'room': roomName, 'guess': inputElement.value});
     });
 
     // Add event listener to the end turn button.
     const endTurnButton = document.getElementById('end-turn-button');
     endTurnButton.addEventListener('click', (event) => {
-        socket.emit('end_turn', {'room': roomName});
+        socket.emit('hn-end_turn', {'room': roomName});
     });
 
     // Add event listeners to the player mode buttons.
@@ -60,7 +60,7 @@ function add_button_event_listeners(socket, roomName) {
         sypmasterButton.setAttribute("class", "btn btn-info shadow-none");
         guesserButton.setAttribute("class", "btn btn-light gray-button shadow-none");
 
-        socket.emit('player_mode_change', {'room': roomName});
+        socket.emit('hn-player_mode_change', {'room': roomName});
     });
     guesserButton.addEventListener('click', (event) => {
         spymasterMode = false;
@@ -68,7 +68,7 @@ function add_button_event_listeners(socket, roomName) {
         sypmasterButton.setAttribute("class", "btn btn-light gray-button shadow-none");
         guesserButton.setAttribute("class", "btn btn-info shadow-none");
 
-        socket.emit('player_mode_change', {'room': roomName});
+        socket.emit('hn-player_mode_change', {'room': roomName});
     });
 
     document.getElementById("new-game-button").addEventListener('click', (event) => {
@@ -80,7 +80,7 @@ function confirmAndStartNewGame(socket, roomName) {
     const confirmation = confirm("Do you want to start a new game? The current board will be cleared.");
     if (confirmation === true) {
         console.info("Starting new game...");
-        socket.emit('new_game', {'room': roomName});
+        socket.emit('hn-new_game', {'room': roomName});
     }
 }
 

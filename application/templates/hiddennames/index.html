@@ -1,11 +1,11 @@
 <!doctype html>
 <html lang="en">
 <head>
-    {% include 'head.html' %}
+    {% include 'hiddennames/head.html' %}
 
     <title>Hidden Names Game</title>
 
-    <link rel="stylesheet" href="{{ url_for('static', filename='index.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='hiddennames/index.css') }}">
     <script type="text/javascript">
         function join_game() {
             event.preventDefault();
@@ -21,7 +21,7 @@
     </div>
     <div id="button_row" class="row h-75">
         <div id="new_game_column" class="col align-self-center text-center">
-            <form action="/create_game" enctype="application/x-www-form-urlencoded" method="post">
+            <form action="{{ url_for('hidden_names.create_game') }}" enctype="application/x-www-form-urlencoded" method="post">
                 <button type="submit" class="btn btn-success">Create Game</button>
             </form>
         </div>

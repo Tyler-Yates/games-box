@@ -2,12 +2,12 @@ import random
 import string
 from typing import Optional
 
+from application.games.common.word_manager import WordManager
 from .game_state import GameState
 from .scoring_type import ScoringType
-from application.games.common.word_manager import WordManager
 
 
-class GameManager:
+class ScrambledWordsGameManager:
     """
     Manages all the games.
     """

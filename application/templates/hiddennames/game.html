@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    {% include 'head.html' %}
+    {% include 'hiddennames/head.html' %}
 
     <title>{{ game_state.game_name }} - Hidden Names Game</title>
 
-    <link rel="stylesheet" href="{{ url_for('static', filename='game.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='hiddennames/game.css') }}">
     <script type="text/javascript" src="{{ url_for('static', filename='vendor/socketio.js') }}"></script>
-    <script type="text/javascript" src="{{ url_for('static', filename='game.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='hiddennames/game.js') }}"></script>
 </head>
 <body>
 <div class="text-center">

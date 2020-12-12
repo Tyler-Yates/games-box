@@ -4,10 +4,10 @@ import flask
 from flask import current_app
 from flask_socketio import emit, join_room
 
-from application import GameManager, SCRAMBLED_WORDS_GAME_MANAGER_CONFIG_KEY
+from application import ScrambledWordsGameManager, SCRAMBLED_WORDS_GAME_MANAGER_CONFIG_KEY
 from application import socketio
 
-LOG = logging.getLogger("GameState")
+LOG = logging.getLogger("scrambledwords.events")
 
 
 @socketio.on("join")
@@ -85,5 +85,5 @@ def _get_player_id() -> str:
     return flask.request.remote_addr
 
 
-def _get_game_manager() -> GameManager:
+def _get_game_manager() -> ScrambledWordsGameManager:
     return current_app.config[SCRAMBLED_WORDS_GAME_MANAGER_CONFIG_KEY]

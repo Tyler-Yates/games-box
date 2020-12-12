@@ -3,12 +3,12 @@ import logging
 from flask import current_app, redirect, render_template, request, url_for
 
 from application import SCRAMBLED_WORDS_GAME_MANAGER_CONFIG_KEY
-from ..data.game_manager import GameManager
+from ..data.game_manager import ScrambledWordsGameManager
 from ..data.scoring_type import ScoringType
 from . import scrambled_words_blueprint
 
 
-LOG = logging.getLogger("Routes")
+LOG = logging.getLogger("scrambledwords.routes")
 
 
 @scrambled_words_blueprint.route("/")
@@ -43,5 +43,5 @@ def create_game():
     return redirect(url_for(".game_page", game_name=game_state.game_name), code=302)
 
 
-def _get_game_manager() -> GameManager:
+def _get_game_manager() -> ScrambledWordsGameManager:
     return current_app.config[SCRAMBLED_WORDS_GAME_MANAGER_CONFIG_KEY]

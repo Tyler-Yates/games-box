@@ -10,7 +10,7 @@ WORD_COUNT = 25
 BLUE_TEAM_TILES = 9
 RED_TEAM_TILES = 8
 
-LOG = logging.getLogger("GameState")
+LOG = logging.getLogger("hiddennames.GameState")
 
 
 class GameState:

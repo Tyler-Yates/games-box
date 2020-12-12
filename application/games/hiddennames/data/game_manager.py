@@ -6,7 +6,7 @@ from .game_state import GameState
 from application.games.common.word_manager import WordManager
 
 
-class GameManager:
+class HiddenNamesGameManager:
     """
     Manages all the games.
     """

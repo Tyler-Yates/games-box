@@ -3,7 +3,7 @@ import os
 import random
 from typing import List, Set
 
-LOG = logging.getLogger("word_manager")
+LOG = logging.getLogger("common.word_manager")
 
 FILE_LOCATION = os.path.dirname(os.path.realpath(__file__))
 
@@ -25,7 +25,7 @@ class WordManager:
         LOG.debug(f"Loaded {len(self.words)} words.")
 
     def is_word(self, word: str) -> bool:
-        return word.lower() in self.words
+        return word.upper() in self.words
 
     def get_random_words(self, number_of_words: int) -> List[str]:
         return random.sample(self.words, number_of_words)
