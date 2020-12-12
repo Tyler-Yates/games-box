@@ -2,7 +2,7 @@ from typing import List
 
 from application.games.common.word_manager import WordManager
 from application.games.scrambledwords.data.game_state import GameState
-from .accepting_word_manager import AcceptingWordManager
+from ...common.accepting_word_manager import AcceptingWordManager
 
 
 class TestGameState:

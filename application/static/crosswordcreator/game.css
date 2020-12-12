@@ -1,0 +1,112 @@
+body {
+    margin: 10px;
+}
+
+.btn-row {
+    height: 30px;
+}
+
+.btn-tile {
+    height: 30px;
+    width: 30px;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    border: 1px solid grey !important;
+    color: black;
+    text-transform: uppercase;
+    padding: 0;
+}
+
+.btn-tile:disabled {
+    opacity: 100;
+}
+
+#upper-info-div {
+    margin-bottom: 20px;
+}
+
+#inner-button-container {
+    padding: 0;
+    border: 1px solid grey;
+    height: 752px;
+    width: 752px;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+#tiles-container {
+    width: 300px;
+    padding-left: 0;
+    margin-left: 0;
+    margin-right: 0;
+}
+
+#right-container {
+    width: 200px;
+    padding-left: 0;
+    margin-left: 10px;
+    margin-right: 0;
+}
+
+.hand-tile {
+    margin: 5px;
+}
+
+.invalid-position {
+    background-color: lightcoral;
+}
+
+#primary-info {
+    width: 300px;
+    margin-left: 0;
+    margin-right: 10px;
+}
+
+#message-banner {
+    width: 752px;
+    margin-left: 0;
+    margin-right: 0;
+}
+
+.banner {
+    padding: 10px;
+    border: solid 1px darkgray;
+}
+
+.right-row {
+    margin-top: 15px;
+}
+
+.pulse {
+    animation: pulse 2s linear 0s;
+}
+
+@keyframes pulse {
+    0% {
+        background-color: white;
+    }
+    33% {
+        color: white;
+        background-color: coral;
+    }
+    66% {
+        color: white;
+        background-color: coral;
+    }
+    100% {
+        background-color: white;
+    }
+}
+
+.arrow-row {
+    margin-top: 5px;
+}
+
+#shift-down-button, #shift-up-button {
+    margin-left: 28px;
+}
+
+#shift-right-button {
+    margin-left: 5px;
+}

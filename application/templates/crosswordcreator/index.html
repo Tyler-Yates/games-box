@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+<head>
+    {% include 'crosswordcreator/head.html' %}
+
+    <title>Crossword Creator Game</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='crosswordcreator/index.css') }}">
+    <script type="text/javascript" src="{{ url_for('static', filename='crosswordcreator/home.js') }}"></script>
+</head>
+<body>
+<div class="container h-100">
+    <div class="text-center">
+        <h1>Crossword Creator</h1>
+    </div>
+    <div id="button_row" class="row h-75">
+        <div id="new_game_column" class="col align-self-center text-center">
+            <form action="{{ url_for('crossword_creator.create_game') }}" enctype="application/x-www-form-urlencoded" method="post">
+                <div class="form-group">
+                    <label for="player_name_create" class="form-label">Player Name: </label>
+                    <input id="player_name_create" name="player_name" type="text" maxlength="32" class="form-control">
+                </div>
+                <input id="player_id_create" name="player_id" type="hidden">
+                <button type="submit" class="btn btn-success">Create Game</button>
+            </form>
+        </div>
+        <div id="join_game_column" class="col align-self-center text-center">
+            <form action="{{ url_for('crossword_creator.join_game') }}" enctype="application/x-www-form-urlencoded" method="post">
+                <div class="form-group">
+                    <label for="game_name_join" class="form-label">Game Name: </label>
+                    <input id="game_name_join" name="game_name" type="text" maxlength="4" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="player_name_join" class="form-label">Player Name: </label>
+                    <input id="player_name_join" name="player_name" type="text" maxlength="32" class="form-control">
+                </div>
+                <input id="player_id_join" name="player_id" type="hidden">
+                <button type="submit" class="btn btn-primary">Join Game</button>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>

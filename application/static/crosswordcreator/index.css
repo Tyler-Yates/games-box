@@ -1,0 +1,25 @@
+html, body {
+    height: 100%;
+}
+
+#game_name {
+    display: inline-block;
+    width: 125px;
+    text-transform: uppercase;
+}
+
+.btn, .form-label {
+   font-size: 200%;
+}
+
+.btn {
+    border-radius: 10px;
+}
+
+#join_game_column {
+    border-left: #1d2124 solid 1px;
+}
+
+#scoring-type {
+    width: 75%
+}
