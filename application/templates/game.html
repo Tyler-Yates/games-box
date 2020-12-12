@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% include 'head.html' %}
+
+    <title>{{ game_state.game_name }} - Scrambled Words</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='scrambledwords/game.css') }}">
+    <script type="text/javascript" src="{{ url_for('static', filename='vendor/socketio.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='scrambledwords/game.js') }}"></script>
+</head>
+<body>
+<div class="text-center">
+    <h1>Game: <span id="game-name">{{ game_state.game_name }}</span></h1>
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <hr>
+        </div>
+    </div>
+</div>
+
+<div id="button-container" class="container">
+    <div class="row">
+        <div id="valid-word-container" class="container side-bar">
+            <div>
+                <p><strong>Valid guessed words:</strong></p>
+            </div>
+            <div id="valid-words-div">
+            </div>
+        </div>
+        <div id="inner-button-container" class="container">
+            {% for tile in game_state.game_tiles %}
+                {% if loop.index0 is divisibleby(5) %}
+                    {% if loop.index0 != 0 %}
+                        </div>
+                    {% endif %}
+                    <div class="row btn-row no-gutters">
+                {% endif %}
+
+                <div class="col">
+                    <button id="tile-{{ loop.index0 }}" class="btn btn-tile btn-light btn-block rounded-0" disabled>
+                        {{ tile }}
+                    </button>
+                </div>
+            {% endfor %}
+            </div>
+    </div>
+    <div id="timer-container" class="container side-bar">
+        <div id="time-remaining-container">
+            <div>
+                <p><strong>Time remaining:</strong></p>
+            </div>
+            <div id="time-remaining-div">
+            </div>
+        </div>
+        <div id="round-score-container">
+            <div id="round-score-label">
+                <p><strong>Round Score:</strong></p>
+            </div>
+            <div id="round-score-div" class="score-div">
+                _
+            </div>
+        </div>
+        <div id="total-score-container">
+            <div id="total-score-label">
+                <p><strong>Total Score:</strong></p>
+            </div>
+            <div id="total-score-div" class="score-div">
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <hr>
+        </div>
+    </div>
+    <div class="row">
+        <div id="guess-div" class="col">
+            <div class="form-group">
+                <label for="guessWordInput">Guess Word:</label>
+                <input type="text" autocomplete="off" class="form-control" id="guessWordInput" placeholder="Guess">
+            </div>
+            <button id="guessWordSubmit" class="btn btn-primary">Submit</button>
+        </div>
+        <div class="col text-right">
+            <button id="new-game-button" class="btn btn-success">New Game</button>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,82 @@
+.btn-row {
+    height: 100px;
+}
+
+.btn-tile {
+    height: 100px;
+    font-size: 250%;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    border: 1px solid black !important;
+    color: black;
+    text-transform: uppercase;
+}
+
+.btn-tile:disabled {
+    opacity: 100;
+}
+
+#inner-button-container {
+    padding: 0;
+    border: 1px solid black;
+    width: 500px;
+    margin-left: 0;
+}
+
+#valid-word-container {
+    width: 250px;
+    height: 500px;
+    margin-right: 0;
+}
+
+.side-bar p {
+    margin-bottom: 0;
+}
+
+#valid-words-div {
+    height: 95%;
+    overflow-y: auto;
+}
+
+#guess-div {
+    max-width: 25%;
+}
+
+#timer-container {
+    width: 200px;
+    margin-left: 0;
+}
+
+#time-remaining-div {
+    font-size: 200%;
+}
+
+#time-remaining-container {
+    padding-bottom: 30px;
+}
+
+#round-score-div {
+    font-size: 200%;
+    padding-bottom: 100px;
+}
+
+#total-score-container {
+    font-size: 90%;
+}
+
+.scored-word {
+    color: green;
+}
+
+.partial-scored-word {
+    color: darkorange;
+}
+
+.unscored-word {
+    color: red;
+}
+
+.path-tile {
+    background-color: #ddf6dd !important;
+}
