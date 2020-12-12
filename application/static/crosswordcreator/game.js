@@ -10,7 +10,7 @@ $(document).ready(function () {
         socket.emit('cc-join', {'room': roomName});
     });
 
-    socket.on("peel", function (data) {
+    socket.on("cc-peel", function (data) {
         const player = data["peeling_player"];
         console.log(`Player ${player} has peeled.`);
         updateMessageBanner(`Player ${player} has peeled.`);
@@ -19,7 +19,7 @@ $(document).ready(function () {
         socket.emit("cc-update_request", {"room": roomName});
     });
 
-    socket.on("unsuccessful_peel", function (data) {
+    socket.on("cc-unsuccessful_peel", function (data) {
         console.log(`Unsuccessful peel.`);
         data["invalid_positions"].forEach(function (position) {
             const invalidPosition = document.getElementById(`space-${position[0]}-${position[1]}`);
@@ -28,7 +28,7 @@ $(document).ready(function () {
     });
 
     // When the server lets us know that the board has changed, ask the server for the update providing our player ID.
-    socket.on("request_update", function (data) {
+    socket.on("cc-request_update", function (data) {
         console.log(data);
 
         if ("message" in data) {
@@ -38,13 +38,13 @@ $(document).ready(function () {
         socket.emit("cc-update_request", {"room": roomName});
     });
 
-    socket.on("board_update", function (data) {
+    socket.on("cc-board_update", function (data) {
         console.log(data);
 
         handleGameUpdate(data);
     });
 
-    socket.on("game_over", function (data) {
+    socket.on("cc-game_over", function (data) {
         console.log(data);
 
         // Set the winning player
