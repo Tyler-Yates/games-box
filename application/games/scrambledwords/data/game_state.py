@@ -4,10 +4,10 @@ from collections import Counter
 from threading import Timer
 from typing import List, Set, Dict, Optional
 
-from application.scrambledwords.data.scoring import Scoring
-from application.scrambledwords.data.scoring_type import ScoringType
-from application.scrambledwords.data.word_manager import WordManager
-from application.scrambledwords.util.time_util import get_time_millis
+from .scoring import Scoring
+from .scoring_type import ScoringType
+from .word_manager import WordManager
+from ..util.time_util import get_time_millis
 
 TOTAL_TILES = 25
 TOTAL_TIME_SECONDS = 3 * 60

@@ -1,6 +1,6 @@
 from typing import Union
 
-from application.scrambledwords.data.scoring_type import ScoringType
+from .scoring_type import ScoringType
 
 
 class Scoring:

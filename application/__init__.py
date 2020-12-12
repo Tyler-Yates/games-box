@@ -3,8 +3,8 @@ import logging
 from flask import Flask, Blueprint, render_template
 from flask_socketio import SocketIO
 
-from application.scrambledwords.data.game_manager import GameManager
-from application.scrambledwords.data.word_manager import WordManager
+from .games.scrambledwords.data.game_manager import GameManager
+from .games.scrambledwords.data.word_manager import WordManager
 
 GAME_MANAGER_CONFIG_KEY = "game_manager"
 
@@ -32,7 +32,7 @@ def create_flask_app() -> Flask:
 
     app.register_blueprint(main_blueprint, url_prefix="/")
 
-    from application.scrambledwords.networking import scrambled_words_blueprint as scrambled_words_blueprint
+    from application.games.scrambledwords.networking import scrambled_words_blueprint as scrambled_words_blueprint
 
     app.register_blueprint(scrambled_words_blueprint, url_prefix="/scrambled_words/")
     app.config["SEND_FILE_MAX_AGE_DEFAULT"] = 60

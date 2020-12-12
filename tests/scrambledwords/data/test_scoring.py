@@ -1,5 +1,5 @@
-from application.scrambledwords.data.scoring import Scoring
-from application.scrambledwords.data.scoring_type import ScoringType
+from application.games.scrambledwords.data.scoring import Scoring
+from application.games.scrambledwords.data.scoring_type import ScoringType
 
 
 class TestScoring:

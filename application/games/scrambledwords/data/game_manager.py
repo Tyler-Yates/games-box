@@ -2,9 +2,9 @@ import random
 import string
 from typing import Optional
 
-from application.scrambledwords.data.game_state import GameState
-from application.scrambledwords.data.scoring_type import ScoringType
-from application.scrambledwords.data.word_manager import WordManager
+from .game_state import GameState
+from .scoring_type import ScoringType
+from .word_manager import WordManager
 
 
 class GameManager:
