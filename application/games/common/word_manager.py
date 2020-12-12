@@ -12,7 +12,7 @@ class WordManager:
     def __init__(self, words: Set[str] = None, word_file_path: str = ""):
         # If we are given a set of words, use those and return early
         if words is not None:
-            self.words = words
+            self.words = set([word.upper() for word in words])
             return
 
         # Otherwise, load the given file of words

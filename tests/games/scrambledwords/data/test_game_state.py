@@ -2,13 +2,13 @@ from typing import List
 
 from application.games.common.word_manager import WordManager
 from application.games.scrambledwords.data.game_state import GameState
-from .test_word_manager import TestWordManager
+from .accepting_word_manager import AcceptingWordManager
 
 
 class TestGameState:
     def setup_method(self):
         # Create a word manager that accepts any word
-        word_manager = TestWordManager()
+        word_manager = AcceptingWordManager()
 
         tiles = [
             "s", "a", "b", "e", "r",
