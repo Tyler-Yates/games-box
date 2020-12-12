@@ -1,6 +1,6 @@
 from typing import List
 
-from application.games.scrambledwords.data.word_manager import WordManager
+from application.games.common.word_manager import WordManager
 from application.games.scrambledwords.data.game_state import GameState
 from .test_word_manager import TestWordManager
 

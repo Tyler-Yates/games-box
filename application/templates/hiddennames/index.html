@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+<head>
+    {% include 'head.html' %}
+
+    <title>Hidden Names Game</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='index.css') }}">
+    <script type="text/javascript">
+        function join_game() {
+            event.preventDefault();
+            const game_name = document.getElementById("game_name").value.toUpperCase();
+            window.location.href = `/games/${game_name}`;
+        }
+    </script>
+</head>
+<body>
+<div class="container h-100">
+    <div class="text-center">
+        <h1>Hidden Names</h1>
+    </div>
+    <div id="button_row" class="row h-75">
+        <div id="new_game_column" class="col align-self-center text-center">
+            <form action="/create_game" enctype="application/x-www-form-urlencoded" method="post">
+                <button type="submit" class="btn btn-success">Create Game</button>
+            </form>
+        </div>
+        <div id="join_game_column" class="col align-self-center text-center">
+            <form onsubmit="join_game()" method="post">
+                <div class="form-group">
+                    <label for="game_name" class="form-label">Game Name: </label>
+                    <input id="game_name" name="game_name" type="text" maxlength="4" class="form-control">
+                </div>
+                <button type="submit" class="btn btn-primary">Join Game</button>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>

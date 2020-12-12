@@ -3,7 +3,6 @@ import string
 from typing import Optional
 
 from .game_state import GameState
-from .scoring_type import ScoringType
 from application.games.common.word_manager import WordManager
 
 
@@ -16,7 +15,7 @@ class GameManager:
         self.games = {}
         self.word_manager = word_manager
 
-    def create_game(self, scoring_type: ScoringType = ScoringType.CLASSIC) -> GameState:
+    def create_game(self) -> GameState:
         """
         Creates a new game.
 
@@ -27,16 +26,16 @@ class GameManager:
         while game_name in self.games:
             game_name = self._create_game_name()
 
-        return self.create_game_for_name(game_name, scoring_type)
+        return self.create_game_for_name(game_name)
 
-    def create_game_for_name(self, game_name: str, scoring_type: ScoringType) -> GameState:
+    def create_game_for_name(self, game_name: str) -> GameState:
         """
         Creates a new game with the given game name.
 
         Returns:
             the game state
         """
-        game_state = GameState(game_name, self.word_manager, scoring_type=scoring_type)
+        game_state = GameState(game_name, self.word_manager)
         self.games[game_name] = game_state
 
         return game_state
@@ -50,7 +49,6 @@ class GameManager:
         Returns:
             the game state if one exists
         """
-        game_name = game_name.upper()
         return self.games.get(game_name, None)
 
     @staticmethod

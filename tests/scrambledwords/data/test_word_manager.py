@@ -1,4 +1,4 @@
-from application.games.scrambledwords.data.word_manager import WordManager
+from application.games.common.word_manager import WordManager
 
 
 class TestWordManager(WordManager):

@@ -4,7 +4,7 @@ import flask
 from flask import current_app
 from flask_socketio import emit, join_room
 
-from application import GameManager, GAME_MANAGER_CONFIG_KEY
+from application import GameManager, SCRAMBLED_WORDS_GAME_MANAGER_CONFIG_KEY
 from application import socketio
 
 LOG = logging.getLogger("GameState")
@@ -86,4 +86,4 @@ def _get_player_id() -> str:
 
 
 def _get_game_manager() -> GameManager:
-    return current_app.config[GAME_MANAGER_CONFIG_KEY]
+    return current_app.config[SCRAMBLED_WORDS_GAME_MANAGER_CONFIG_KEY]

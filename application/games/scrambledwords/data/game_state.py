@@ -6,7 +6,7 @@ from typing import List, Set, Dict, Optional
 
 from .scoring import Scoring
 from .scoring_type import ScoringType
-from .word_manager import WordManager
+from application.games.common.word_manager import WordManager
 from ..util.time_util import get_time_millis
 
 TOTAL_TILES = 25

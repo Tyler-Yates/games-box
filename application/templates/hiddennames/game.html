@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% include 'head.html' %}
+
+    <title>{{ game_state.game_name }} - Hidden Names Game</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='game.css') }}">
+    <script type="text/javascript" src="{{ url_for('static', filename='vendor/socketio.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='game.js') }}"></script>
+</head>
+<body>
+<div class="text-center">
+    <h1>Game: <span id="game-name">{{ game_state.game_name }}</span></h1>
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="col text-primary">
+            Blue Team Tiles Remaining: <span id="blue-team-tiles-remaining"></span>
+        </div>
+
+        <div class="col text-right">
+            <span id="team-label">Current Team's Turn:</span>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col text-danger">
+            Red Team Tiles Remaining: <span id="red-team-tiles-remaining"></span>
+        </div>
+        <div class="col text-right">
+            <span id="current-team"></span>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <hr>
+        </div>
+    </div>
+</div>
+
+<div id="button-container" class="container">
+<div id="inner-button-container">
+    {% for game_tile in game_state.game_tiles.values() %}
+        {% if loop.index0 is divisibleby(5) %}
+            {% if loop.index0 != 0 %}
+                </div>
+            {% endif %}
+            <div class="row btn-row no-gutters">
+        {% endif %}
+
+        <div class="col">
+            <button id="button-{{ game_tile.word }}" class="btn btn-tile btn-light btn-block rounded-0">
+                <input type="hidden" id="button-{{ game_tile.word }}-input" name="word" value="{{ game_tile.word }}"/>
+                {{ game_tile.word }}
+            </button>
+        </div>
+    {% endfor %}
+    </div>
+</div>
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <hr>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col btn-group">
+            <button id="guesser-button" class="btn btn-info">Guesser</button>
+            <button id="spymaster-button" class="btn btn-light gray-button">Spymaster</button>
+        </div>
+        <div class="col text-right">
+            <button id="end-turn-button" class="btn btn-secondary">End Turn</button>
+            <button id="new-game-button" class="btn btn-success" style="display: none">New Game</button>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

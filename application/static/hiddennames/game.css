@@ -1,0 +1,36 @@
+.btn-row {
+    height: 100px;
+}
+
+.btn-tile {
+    height: 100px;
+    font-size: 150%;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    border: 1px solid black !important;
+}
+
+#inner-button-container {
+    padding: 0;
+    border: 1px solid black;
+}
+
+#spymaster-button {
+    border-color: darkgray;
+    border-left: 0;
+}
+
+#guesser-button {
+    border-color: darkgray;
+    border-right: 0;
+}
+
+.gray-button {
+    color: darkgray;
+}
+
+.btn-dark:disabled {
+    background-color: #444444;
+    opacity: 100;
+}
