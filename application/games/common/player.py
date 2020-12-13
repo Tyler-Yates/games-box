@@ -1,16 +1,18 @@
 import flask
 from flask import request
 
+from .routes import PLAYER_ID_KEY, PLAYER_NAME_KEY
+
 
 def get_player_id() -> str:
-    if "player_id" in request.cookies:
-        return flask.request.cookies["player_id"]
+    if PLAYER_ID_KEY in request.cookies:
+        return flask.request.cookies[PLAYER_ID_KEY]
     else:
         raise ValueError("No player_id detected!")
 
 
 def get_player_name() -> str:
-    if "player_name" in request.cookies:
-        return flask.request.cookies["player_name"]
+    if PLAYER_NAME_KEY in request.cookies:
+        return flask.request.cookies[PLAYER_NAME_KEY]
     else:
         raise ValueError("No player_name detected!")
