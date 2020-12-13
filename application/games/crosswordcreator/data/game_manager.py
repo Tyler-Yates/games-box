@@ -55,9 +55,9 @@ class CrosswordCreatorGameManager:
     @staticmethod
     def _create_game_name() -> str:
         game_name = ""
-        for i in range(0, 4):
+        for i in range(0, 3):
             game_name += random.choice(string.ascii_uppercase)
-        return game_name
+        return "CC" + game_name
 
     def _expire_game(self):
         # TODO we should expire games so that they don't live in memory forever.
