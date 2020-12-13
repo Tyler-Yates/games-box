@@ -2,21 +2,29 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='vendor/bootstrap.min.css') }}">
+    <script src="{{ url_for('static', filename='vendor/jquery.slim.min.js') }}"></script>
+
     <title>Games Box</title>
 </head>
 <body>
-<div class="text-center">
+<div class="text-center container">
     <h1>Welcome to Games Box!</h1>
     <p>
         It looks like this is your first time using Games Box.
         Please enter a name that will be displayed to other players.
     </p>
     <form action="{{ url_for('common.new_player_register') }}" enctype="application/x-www-form-urlencoded" method="post">
-        <div class="form-group">
-            <label for="player_name_join" class="form-label">Player Name: </label>
-            <input id="player_name_join" name="player_name" type="text" maxlength="32" class="form-control">
+        <div class="row">
+            <div class="col-lg-3 mx-auto">
+                <div class="form-group">
+                    <label for="player_name_join" class="form-label">Player Name: </label>
+                    <input id="player_name_join" name="player_name" type="text" maxlength="32" class="form-control">
+                </div>
+            </div>
         </div>
-        <button type="submit" class="btn btn-primary">Join Game</button>
+        <button type="submit" class="btn btn-primary">Set Name</button>
     </form>
 </div>
 </body>

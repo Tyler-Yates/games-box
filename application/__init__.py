@@ -65,7 +65,7 @@ def _setup_app(app: Flask):
 
         # Ensure players create an ID cookie
         if ("player_id" not in request.cookies) or ("player_name" not in request.cookies):
-            if not request.url.endswith("/new_player"):
+            if ("vendor" not in request.url) and (not request.url.endswith("/new_player")):
                 return redirect("/new_player")
 
     @app.context_processor
