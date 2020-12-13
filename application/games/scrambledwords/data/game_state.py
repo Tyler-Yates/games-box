@@ -11,7 +11,7 @@ from .scoring_type import ScoringType
 from ..util.time_util import get_time_millis
 
 TOTAL_TILES = 25
-TOTAL_TIME_SECONDS = 1 * 60
+TOTAL_TIME_SECONDS = 3 * 60
 
 LOG = logging.getLogger("scrambledwords.GameState")
 
