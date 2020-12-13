@@ -35,8 +35,12 @@
 }
 
 #valid-words-div {
-    height: 95%;
+    height: 430px;
     overflow-y: auto;
+}
+
+#guess-box-div {
+    margin-top: 10px;
 }
 
 #guess-div {
@@ -58,7 +62,7 @@
 
 #round-score-div {
     font-size: 200%;
-    padding-bottom: 100px;
+    padding-bottom: 20px;
 }
 
 #total-score-container {

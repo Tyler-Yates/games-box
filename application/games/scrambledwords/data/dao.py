@@ -27,7 +27,7 @@ class ScrambledWordsDao:
     def record_score(self, board_id: str, score: int, player_name: str):
         # We don't want duplicate entries, so do an upsert instead of an insert
         data = {BOARD_FIELD: board_id, SCORE_FIELD: score, PLAYER_FIELD: player_name}
-        self.scrambled_words_hiscore.update_one(data, data, upsert=True)
+        self.scrambled_words_hiscore.update_one(data, {"$set": data}, upsert=True)
 
         self._clean_collection(board_id)
 

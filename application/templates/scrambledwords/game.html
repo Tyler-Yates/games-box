@@ -13,8 +13,23 @@
 {% block content %}
     <title>Scrambled Words</title>
 
-    <div class="text-center">
-        <h1>Game: <span id="game-name">{{ game_state.game_name }}</span></h1>
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <div>
+                    <strong>Board ID:</strong>
+                </div>
+                <div id="board-id-div">
+                    _
+                </div>
+            </div>
+            <div class="col text-center">
+                <h1>Game: <span id="game-name">{{ game_state.game_name }}</span></h1>
+            </div>
+            <div id="guess-box-div" class="col text-right my-auto">
+                <button id="new-game-button" class="btn btn-success">New Game</button>
+            </div>
+        </div>
     </div>
 
     <div class="container">
@@ -29,9 +44,15 @@
         <div class="row">
             <div id="valid-word-container" class="container side-bar">
                 <div>
-                    <p><strong>Valid guessed words:</strong></p>
+                    <p><strong>Correctly guessed words:</strong></p>
                 </div>
                 <div id="valid-words-div">
+                </div>
+                <div class="input-group mb-3">
+                    <input type="text" autocomplete="off" class="form-control" id="guessWordInput" placeholder="Guess">
+                    <div class="input-group-append">
+                        <button id="guessWordSubmit" class="btn btn-primary">Guess</button>
+                    </div>
                 </div>
             </div>
             <div id="inner-button-container" class="container">
@@ -85,23 +106,5 @@
     </div>
     </div>
 
-    <div class="container">
-        <div class="row">
-            <div class="col">
-                <hr>
-            </div>
-        </div>
-        <div class="row">
-            <div id="guess-div" class="col">
-                <div class="form-group">
-                    <label for="guessWordInput">Guess Word:</label>
-                    <input type="text" autocomplete="off" class="form-control" id="guessWordInput" placeholder="Guess">
-                </div>
-                <button id="guessWordSubmit" class="btn btn-primary">Submit</button>
-            </div>
-            <div class="col text-right">
-                <button id="new-game-button" class="btn btn-success">New Game</button>
-            </div>
-        </div>
     </div>
 {% endblock %}

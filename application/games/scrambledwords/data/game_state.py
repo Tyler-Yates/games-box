@@ -93,7 +93,7 @@ class GameState:
         Returns:
             the game state
         """
-        game_state = {"expire_time": self.expire_time, "tiles": self.game_tiles}
+        game_state = {"expire_time": self.expire_time, "tiles": self.game_tiles, "board_id": self.get_board_id()}
         if player_id:
             # Set is not serializable so turn it into a set
             game_state["player_guesses"] = list(self.valid_guesses.get(player_id, {}))

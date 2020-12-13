@@ -27,6 +27,9 @@ $(document).ready(function () {
     socket.on("game_state", function (data) {
         console.log(data);
 
+        // Update board ID
+        document.getElementById("board-id-div").innerText = data["board_id"];
+
         // Update tiles
         if (data.tiles.length === 0) {
             for (var index = 0; index < 25; index++) {
