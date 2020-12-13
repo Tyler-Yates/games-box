@@ -22,6 +22,8 @@ class ScrambledWordsDao:
 
         self.scrambled_words_hiscore: Collection = self.database.scrambled_words_hiscore
 
+        self.scrambled_words_hiscore.create_index([(BOARD_FIELD, ASCENDING)])
+
     def record_score(self, board_id: str, score: int, player_name: str):
         self.scrambled_words_hiscore.insert_one({BOARD_FIELD: board_id, SCORE_FIELD: score, PLAYER_FIELD: player_name})
 

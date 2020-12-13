@@ -196,7 +196,10 @@ class GameState:
 
         # If there was a score, record it in the database
         if (round_score > 0) and (self.dao is not None):
-            self.dao.record_score(self.get_board_id(), round_score, player_name)
+            try:
+                self.dao.record_score(self.get_board_id(), round_score, player_name)
+            except Exception:
+                LOG.exception("Could not save score to database.")
 
         # Send the JSON data back to the player
         return {
