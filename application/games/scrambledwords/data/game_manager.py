@@ -3,6 +3,7 @@ import string
 from typing import Optional
 
 from application.games.common.word_manager import WordManager
+from application.games.scrambledwords.data.dao import ScrambledWordsDao
 from .game_state import GameState
 from .scoring_type import ScoringType
 
@@ -15,6 +16,7 @@ class ScrambledWordsGameManager:
     def __init__(self, word_manager: WordManager):
         self.games = {}
         self.word_manager = word_manager
+        self.dao = ScrambledWordsDao()
 
     def create_game(self, scoring_type: ScoringType = ScoringType.CLASSIC) -> GameState:
         """
@@ -36,7 +38,7 @@ class ScrambledWordsGameManager:
         Returns:
             the game state
         """
-        game_state = GameState(game_name, self.word_manager, scoring_type=scoring_type)
+        game_state = GameState(game_name, self.word_manager, self.dao, scoring_type=scoring_type)
         self.games[game_name] = game_state
 
         return game_state

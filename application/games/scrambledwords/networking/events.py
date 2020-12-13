@@ -27,7 +27,7 @@ def joined_event(message):
     game_state = _get_game_manager().get_game_state(room)
     if game_state:
         LOG.info(f"User {player_id} has joined room {room}")
-        game_state.new_player(get_player_name())
+        game_state.new_player(player_id, get_player_name())
         # Only send the game_state update to the SocketIO session ID as the other players do not need to know
         emit("game_state", game_state.get_game_state(player_id=player_id), to=session_id)
         emit("players_update", game_state.get_players_update(), room=room)
@@ -80,7 +80,7 @@ def timer_expired_event(message):
     game_state = _get_game_manager().get_game_state(room)
 
     if game_state:
-        emit("game_over", game_state.get_score_state(player_id), to=session_id)
+        emit("game_over", game_state.get_score_state(player_id, get_player_name()), to=session_id)
     else:
         LOG.warning(f"Received timer_expired message from Player {player_id} for invalid game {room}")
 

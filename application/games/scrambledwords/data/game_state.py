@@ -4,13 +4,14 @@ from collections import Counter
 from threading import Timer
 from typing import List, Set, Dict, Optional
 
+from application.games.common.word_manager import WordManager
+from application.games.scrambledwords.data.dao import ScrambledWordsDao
 from .scoring import Scoring
 from .scoring_type import ScoringType
-from application.games.common.word_manager import WordManager
 from ..util.time_util import get_time_millis
 
 TOTAL_TILES = 25
-TOTAL_TIME_SECONDS = 3 * 60
+TOTAL_TIME_SECONDS = 1 * 60
 
 LOG = logging.getLogger("scrambledwords.GameState")
 
@@ -24,6 +25,7 @@ class GameState:
         self,
         game_name: str,
         word_manager: WordManager,
+        dao: ScrambledWordsDao,
         scoring_type: ScoringType = ScoringType.CLASSIC,
         game_timer: bool = True,
     ):
@@ -33,6 +35,7 @@ class GameState:
         self.game_timer = game_timer
         self.game_name = game_name
         self.word_manager = word_manager
+        self.dao = dao
         self.scoring_type = scoring_type
 
         self.game_tiles: List[str] = []
@@ -43,7 +46,7 @@ class GameState:
         self.end_game_timer: Timer = None
 
         self.scores: Dict[str, int] = {}
-        self.players = set()
+        self.player_ids_to_names: Dict[str, str] = {}
 
     def new_board(self, tiles: List[str] = None):
         if tiles:
@@ -68,6 +71,13 @@ class GameState:
         self.valid_guesses = {}
 
         self._log_info("Created new board")
+
+    def get_board_id(self) -> str:
+        board_id = ""
+        for tile in self.game_tiles:
+            board_id += tile.upper()
+
+        return board_id
 
     def end_game(self):
         self.game_running = False
@@ -142,12 +152,13 @@ class GameState:
             self._log_info(f"{player_id} guess word '{guessed_word}' is not a recognized word")
             return None
 
-    def get_score_state(self, player_id: str) -> Dict[str, object]:
+    def get_score_state(self, player_id: str, player_name: str) -> Dict[str, object]:
         """
         Called when the player's game timer ends to get the round's score.
 
         Args:
             player_id: The ID of the player
+            player_name: The name of the player
 
         Returns:
             A dictionary representing the scoring state for the given player for this round
@@ -182,6 +193,10 @@ class GameState:
             self.scores[player_id] = self.scores[player_id] + round_score
         else:
             self.scores[player_id] = round_score
+
+        # If there was a score, record it in the database
+        if (round_score > 0) and (self.dao is not None):
+            self.dao.record_score(self.get_board_id(), round_score, player_name)
 
         # Send the JSON data back to the player
         return {
@@ -234,11 +249,11 @@ class GameState:
         LOG.debug(f"Possible paths for '{guessed_word}': {possible_paths}")
         return None if len(possible_paths) == 0 else possible_paths[0]
 
-    def new_player(self, player_name):
-        self.players.add(player_name)
+    def new_player(self, player_id: str, player_name: str):
+        self.player_ids_to_names[player_id] = player_name
 
     def get_players_update(self):
-        return {"players": ", ".join(sorted(self.players))}
+        return {"players": ", ".join(sorted(self.player_ids_to_names.values()))}
 
     def _log_info(self, log_message: str):
         LOG.info("[%s] %s", self.game_name, log_message)

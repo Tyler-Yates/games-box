@@ -19,7 +19,7 @@ class TestGameState:
         ]
 
         # Do not set a game timer as pytest cannot handle that
-        self.game_state = GameState("test", word_manager, game_timer=False)
+        self.game_state = GameState("test", word_manager, None, game_timer=False)
         self.game_state.new_board(tiles=tiles)
 
     def test_guess_word_valid(self):
