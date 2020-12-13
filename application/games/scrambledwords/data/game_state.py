@@ -233,7 +233,7 @@ class GameState:
 
                 # Swap in the new possible paths to discard paths that are no longer possible.
                 possible_paths = new_possible_paths
-        print(f"Possible paths for '{guessed_word}': {possible_paths}")
+        LOG.debug(f"Possible paths for '{guessed_word}': {possible_paths}")
         return None if len(possible_paths) == 0 else possible_paths[0]
 
     def _log_info(self, log_message: str):
