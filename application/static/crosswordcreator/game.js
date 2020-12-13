@@ -64,7 +64,7 @@ $(document).ready(function () {
 });
 
 function getPlayerId() {
-    return document.cookie.split('; ').find(row => row.startsWith('playerId')).split('=')[1];
+    return document.cookie.split('; ').find(row => row.startsWith('player_id')).split('=')[1];
 }
 
 function handleGameUpdate(data) {

@@ -25,7 +25,6 @@ class GameState:
         self.game_name = game_name
         self.word_manager = word_manager
 
-        self.player_ids_to_names = {}
         self.player_ids_to_tiles: Dict[str, List[str]] = {}
         self.player_ids_to_boards: Dict[str, Board] = {}
 
@@ -51,7 +50,6 @@ class GameState:
             return False
         else:
             self._log_info(f"Player {player_id}/{player_name} has joined game.")
-            self.player_ids_to_names[player_id] = player_name
             self.player_ids_to_boards[player_id] = Board(player_id, BOARD_SIZE, self.word_manager)
             self.player_ids_to_tiles[player_id] = []
             return True
@@ -62,7 +60,7 @@ class GameState:
             self.player_ids_to_boards[player_id] = Board(player_id, BOARD_SIZE, self.word_manager)
 
         # Reset the tiles
-        self.tiles_left = TILES_PER_PLAYER * len(self.player_ids_to_names.keys())
+        self.tiles_left = TILES_PER_PLAYER * len(self.player_ids_to_boards.keys())
         self._generate_player_tiles()
 
         self.game_running = True
@@ -90,7 +88,7 @@ class GameState:
             the game state
         """
         game_state = {
-            "num_players": len(self.player_ids_to_names),
+            "num_players": len(self.player_ids_to_boards),
             "tiles_left": self.tiles_left,
             "players": {},
             "game_running": self.game_running,

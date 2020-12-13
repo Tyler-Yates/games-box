@@ -4,6 +4,7 @@ import flask
 from flask import current_app
 from flask_socketio import emit, join_room
 
+from application.games.common.player import get_player_id, get_player_name
 from ..data.game_manager import CrosswordCreatorGameManager
 from application import CROSSWORD_CREATOR_GAME_MANAGER_CONFIG_KEY
 from application import socketio
@@ -20,13 +21,13 @@ def joined_event(message):
     room = message["room"]
     join_room(room)
 
-    player_id = _get_player_id()
+    player_id = get_player_id()
 
     game_state = _get_game_manager().get_game_state(room)
     if game_state:
         LOG.info(f"User {player_id} has joined room {room}")
         # All players should update their game status now that a new player has joined
-        player_name = game_state.player_ids_to_names.get(player_id)
+        player_name = get_player_name()
         update = {"request_update": True, "message": f"Player {player_name} has joined the game"}
         emit("cc-request_update", update, room=room)
     else:
@@ -40,7 +41,7 @@ def add_tile_event(message):
     """
 
     session_id = flask.request.sid
-    player_id = _get_player_id()
+    player_id = get_player_id()
     LOG.debug(f"Received add_tile from {player_id}: {message}")
 
     room = message["room"]
@@ -60,7 +61,7 @@ def remove_tile_event(message):
     """
 
     session_id = flask.request.sid
-    player_id = _get_player_id()
+    player_id = get_player_id()
     LOG.debug(f"Received remove_tile from {player_id}: {message}")
 
     room = message["room"]
@@ -74,7 +75,7 @@ def remove_tile_event(message):
 
 @socketio.on("cc-start_game")
 def new_game_event(message):
-    player_id = _get_player_id()
+    player_id = get_player_id()
     room = message["room"]
     LOG.info(f"Received start_game from {player_id} for room {room}: {message}")
 
@@ -87,7 +88,7 @@ def new_game_event(message):
 @socketio.on("cc-update_request")
 def update_request_event(message):
     session_id = flask.request.sid
-    player_id = _get_player_id()
+    player_id = get_player_id()
     room = message["room"]
     LOG.info(f"Received update_request from {player_id} for room {room}: {message}")
 
@@ -99,7 +100,8 @@ def update_request_event(message):
 @socketio.on("cc-peel")
 def peel_event(message):
     session_id = flask.request.sid
-    player_id = _get_player_id()
+    player_id = get_player_id()
+    player_name = get_player_name()
     LOG.info(f"Received peel from {player_id}: {message}")
 
     room = message["room"]
@@ -111,10 +113,10 @@ def peel_event(message):
             # If the peel was successful, notify all players.
             if game_state.game_running:
                 # Game is still running. Update players.
-                emit("cc-peel", {"peeling_player": game_state.player_ids_to_names[player_id]}, room=room)
+                emit("cc-peel", {"peeling_player": player_name}, room=room)
             else:
                 # The game is over. Notify players of who one.
-                emit("cc-game_over", {"winning_player": game_state.player_ids_to_names[player_id]}, room=room)
+                emit("cc-game_over", {"winning_player": player_name}, room=room)
         else:
             # If the peel is not valid, only the player who tried to peel should get a message
             emit("cc-unsuccessful_peel", {"invalid_positions": list(invalid_positions)}, to=session_id)
@@ -123,7 +125,7 @@ def peel_event(message):
 @socketio.on("cc-exchange")
 def exchange_event(message):
     session_id = flask.request.sid
-    player_id = _get_player_id()
+    player_id = get_player_id()
     hand_tile_index = message["hand_tile_index"]
     LOG.info(f"Received exchange from {player_id}: {message}")
 
@@ -138,7 +140,7 @@ def exchange_event(message):
 @socketio.on("cc-shift_board")
 def shift_board_event(message):
     session_id = flask.request.sid
-    player_id = _get_player_id()
+    player_id = get_player_id()
     LOG.info(f"Received shift_board from {player_id}: {message}")
 
     room = message["room"]
@@ -161,13 +163,6 @@ def shift_board_event(message):
             raise ValueError(f"Invalid direction specified for board shift: {direction}")
 
         emit("cc-board_update", game_state.get_game_state(player_id), to=session_id)
-
-
-def _get_player_id() -> str:
-    if "playerId" in flask.request.cookies:
-        return flask.request.cookies["playerId"]
-    else:
-        raise ValueError("No playerId detected!")
 
 
 def _get_game_manager() -> CrosswordCreatorGameManager:
