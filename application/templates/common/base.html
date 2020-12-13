@@ -24,7 +24,16 @@
     <div id="navbar-nav mr-auto">
         <ul class="navbar-nav">
             <li class="nav-item active">
-                <a class="nav-link" href="/">Games&nbspBox</a>
+                <strong><a class="nav-link" href="/">Home</a></strong>
+            </li>
+            <li class="nav-item active">
+                <a class="nav-link" href="{{ url_for('scrambled_words.index') }}">Scrambled&nbspWords</a>
+            </li>
+            <li class="nav-item active">
+                <a class="nav-link" href="{{ url_for('hidden_names.index') }}">Hidden&nbspNames</a>
+            </li>
+            <li class="nav-item active">
+                <a class="nav-link" href="{{ url_for('crossword_creator.index') }}">Crossword&nbspCreator</a>
             </li>
         </ul>
     </div>
