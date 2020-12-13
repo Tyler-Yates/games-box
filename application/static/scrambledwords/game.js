@@ -22,10 +22,17 @@ $(document).ready(function () {
         console.log(data);
 
         // Update tiles
-        data.tiles.forEach(function (item, index) {
-            const tileElement = document.getElementById(`tile-${index}`);
-            tileElement.innerHTML = item;
-        });
+        if (data.tiles.length === 0) {
+            for (var index = 0; index < 25; index++) {
+                const tileElement = document.getElementById(`tile-${index}`);
+                tileElement.innerHTML = "&nbsp";
+            }
+        } else {
+            data.tiles.forEach(function (item, index) {
+                const tileElement = document.getElementById(`tile-${index}`);
+                tileElement.innerHTML = item;
+            });
+        }
 
         // Update countdown
         expireTimeMillis = data.expire_time;

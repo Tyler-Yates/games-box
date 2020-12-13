@@ -24,7 +24,6 @@ class GameState:
         self,
         game_name: str,
         word_manager: WordManager,
-        tiles: List[str] = None,
         scoring_type: ScoringType = ScoringType.CLASSIC,
         game_timer: bool = True,
     ):
@@ -40,12 +39,10 @@ class GameState:
         self.expire_time: int = None
         self.valid_guesses: Dict[str, Set[str]] = {}
         self.word_counter: Counter = Counter()
-        self.game_running = True
+        self.game_running = False
         self.end_game_timer: Timer = None
 
         self.scores: Dict[str, int] = {}
-
-        self.new_board(tiles)
 
     def new_board(self, tiles: List[str] = None):
         if tiles:
