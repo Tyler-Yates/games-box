@@ -18,6 +18,12 @@ $(document).ready(function () {
         }
     });
 
+    socket.on("players_update", function (data) {
+        console.log(data);
+
+        document.getElementById("total-players-div").innerText = data["players"];
+    });
+
     socket.on("game_state", function (data) {
         console.log(data);
 

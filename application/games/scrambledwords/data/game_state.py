@@ -43,6 +43,7 @@ class GameState:
         self.end_game_timer: Timer = None
 
         self.scores: Dict[str, int] = {}
+        self.players = set()
 
     def new_board(self, tiles: List[str] = None):
         if tiles:
@@ -232,6 +233,12 @@ class GameState:
                 possible_paths = new_possible_paths
         LOG.debug(f"Possible paths for '{guessed_word}': {possible_paths}")
         return None if len(possible_paths) == 0 else possible_paths[0]
+
+    def new_player(self, player_name):
+        self.players.add(player_name)
+
+    def get_players_update(self):
+        return {"players": ", ".join(sorted(self.players))}
 
     def _log_info(self, log_message: str):
         LOG.info("[%s] %s", self.game_name, log_message)
