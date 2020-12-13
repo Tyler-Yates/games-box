@@ -24,6 +24,23 @@ $(document).ready(function () {
         document.getElementById("total-players-div").innerText = data["players"];
     });
 
+    socket.on("hiscore_update", function (data) {
+        console.log(data);
+
+        // Clear the high scores div to start fresh
+        const hiscoreDiv = document.getElementById("hiscore-div");
+        hiscoreDiv.innerHTML = "";
+
+        // Add the high score values to the page
+        const length = data["names"].length;
+        for (var i = 0; i < length; i++) {
+            const paragraphNode = document.createElement("P");
+            const textNode = document.createTextNode(`${data["names"][i]} - ${data["scores"][i]}`);
+            paragraphNode.appendChild(textNode);
+            hiscoreDiv.append(paragraphNode);
+        }
+    });
+
     socket.on("game_state", function (data) {
         console.log(data);
 

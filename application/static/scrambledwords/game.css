@@ -69,6 +69,10 @@
     margin-bottom: 20px;
 }
 
+#total-players-div {
+    margin-bottom: 20px;
+}
+
 .scored-word {
     color: green;
 }

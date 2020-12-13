@@ -5,7 +5,7 @@ from threading import Timer
 from typing import List, Set, Dict, Optional
 
 from application.games.common.word_manager import WordManager
-from application.games.scrambledwords.data.dao import ScrambledWordsDao
+from application.games.scrambledwords.data.dao import ScrambledWordsDao, PLAYER_FIELD, SCORE_FIELD
 from .scoring import Scoring
 from .scoring_type import ScoringType
 from ..util.time_util import get_time_millis
@@ -209,6 +209,16 @@ class GameState:
             "unscored_words": unscored_words,
             "total_score": self.scores[player_id],
         }
+
+    def get_hiscore_update(self) -> Dict[str, List[str]]:
+        names = []
+        scores = []
+        hiscore_docs = self.dao.get_hiscore(self.get_board_id())
+        for doc in hiscore_docs:
+            names.append(doc[PLAYER_FIELD])
+            scores.append(doc[SCORE_FIELD])
+
+        return {"names": names, "scores": scores}
 
     def _word_is_on_board(self, guessed_word: str) -> Optional[List[int]]:
         possible_paths: List[List[int]] = None

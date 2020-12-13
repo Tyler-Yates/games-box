@@ -1,10 +1,10 @@
-from pymongo import ASCENDING
+from pymongo import ASCENDING, DESCENDING
 from pymongo.collection import Collection
 from pymongo.database import Database
 
 from application.games.common.database import get_database
 
-MAX_HI_SCORES = 5
+MAX_HI_SCORES = 3
 
 # Fields used in the database
 PLAYER_FIELD = "player"
@@ -30,6 +30,10 @@ class ScrambledWordsDao:
         self.scrambled_words_hiscore.update_one(data, {"$set": data}, upsert=True)
 
         self._clean_collection(board_id)
+
+    def get_hiscore(self, board_id: str):
+        top_scores = self.scrambled_words_hiscore.find({BOARD_FIELD: board_id}).sort(SCORE_FIELD, direction=DESCENDING).limit(MAX_HI_SCORES)
+        return top_scores
 
     def _clean_collection(self, board_id: str):
         while self.scrambled_words_hiscore.find({BOARD_FIELD: board_id}).count() > MAX_HI_SCORES:
