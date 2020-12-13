@@ -5,8 +5,25 @@
 {% endblock %}
 
 {% block content %}
-    <h1>Game Box</h1>
-    <a href="/scrambled_words"><h3>Scrambled Words</h3></a>
-    <a href="/hidden_names"><h3>Hidden Names</h3></a>
-    <a href="/crossword_creator"><h3>Crossword Creator</h3></a>
+    <div class="container">
+        <div id="games-box-header-row" class="row">
+            <div class="col text-center">
+                <h1>Games Box</h1>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col text-center">
+                <a href="{{ url_for('scrambled_words.index') }}"><img src="{{ url_for('static', filename='common/scrambled_words.png') }}" width="300" height="300"></a>
+                <a href="{{ url_for('scrambled_words.index') }}"><h3>Scrambled Words</h3></a>
+            </div>
+            <div class="col text-center">
+                <a href="{{ url_for('hidden_names.index') }}"><img src="{{ url_for('static', filename='common/hidden_names.png') }}" width="300" height="300"></a>
+                <a href="{{ url_for('hidden_names.index') }}"><h3>Hidden Names</h3></a>
+            </div>
+            <div class="col text-center">
+                <a href="{{ url_for('crossword_creator.index') }}"><img src="{{ url_for('static', filename='common/crossword_creator.png') }}" width="300" height="300"></a>
+                <a href="{{ url_for('crossword_creator.index') }}"><h3>Crossword Creator</h3></a>
+            </div>
+        </div>
+    </div>
 {% endblock %}
