@@ -1,12 +1,13 @@
 import logging
 
-from flask import Flask, Blueprint, render_template, request, redirect
+from flask import Flask, request, redirect
 from flask_socketio import SocketIO
 
-from application.games.crosswordcreator.data.game_manager import CrosswordCreatorGameManager
-from .games.scrambledwords.data.game_manager import ScrambledWordsGameManager
-from .games.hiddennames.data.game_manager import HiddenNamesGameManager
+from .games.common import common_blueprint
+from .games.crosswordcreator.data.game_manager import CrosswordCreatorGameManager
 from .games.common.word_manager import WordManager
+from .games.hiddennames.data.game_manager import HiddenNamesGameManager
+from .games.scrambledwords.data.game_manager import ScrambledWordsGameManager
 
 SCRAMBLED_WORDS_GAME_MANAGER_CONFIG_KEY = "sw_game_manager"
 HIDDEN_NAMES_GAME_MANAGER_CONFIG_KEY = "hn_game_manager"
@@ -18,14 +19,6 @@ LOG = logging.getLogger("__init__")
 logging.basicConfig(level=logging.INFO)
 logging.getLogger("engineio.server").setLevel(logging.WARNING)
 logging.getLogger("socketio.server").setLevel(logging.WARNING)
-
-
-main_blueprint = Blueprint("main", __name__)
-
-
-@main_blueprint.route("/")
-def index():
-    return render_template("index.html")
 
 
 def _setup_scrambled_words(app: Flask):
@@ -59,16 +52,21 @@ def _setup_crossword_creator(app: Flask):
 
 
 def _setup_app(app: Flask):
-    app.register_blueprint(main_blueprint, url_prefix="/")
+    app.register_blueprint(common_blueprint, url_prefix="/")
     app.config["SEND_FILE_MAX_AGE_DEFAULT"] = 60
 
     @app.before_request
     def before_request():
-        if request.url.startswith('http://'):
-            url = request.url.replace('http://', 'https://', 1)
+        # Redirect to HTTPS automatically
+        if request.url.startswith("http://"):
+            url = request.url.replace("http://", "https://", 1)
             code = 301
-            r = redirect(url, code=code)
-            return r
+            return redirect(url, code=code)
+
+        # Ensure players create an ID cookie
+        if ("player_id" not in request.cookies) or ("player_name" not in request.cookies):
+            if not request.url.endswith("/new_player"):
+                return redirect("/new_player")
 
 
 def create_flask_app() -> Flask:

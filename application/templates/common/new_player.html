@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Games Box</title>
+</head>
+<body>
+<div class="text-center">
+    <h1>Welcome to Games Box!</h1>
+    <p>
+        It looks like this is your first time using Games Box.
+        Please enter a name that will be displayed to other players.
+    </p>
+    <form action="{{ url_for('common.new_player_register') }}" enctype="application/x-www-form-urlencoded" method="post">
+        <div class="form-group">
+            <label for="player_name_join" class="form-label">Player Name: </label>
+            <input id="player_name_join" name="player_name" type="text" maxlength="32" class="form-control">
+        </div>
+        <button type="submit" class="btn btn-primary">Join Game</button>
+    </form>
+</div>
+</body>
+</html>
