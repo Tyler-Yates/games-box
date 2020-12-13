@@ -1,133 +1,133 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    {% include 'crosswordcreator/head.html' %}
+{% extends "common/base.html" %}
 
-    <title>{{ game_state.game_name }} - Crossword Creator</title>
-
+{% block imports %}
     <link rel="stylesheet" href="{{ url_for('static', filename='crosswordcreator/game.css') }}">
     <script type="text/javascript" src="{{ url_for('static', filename='vendor/socketio.js') }}"></script>
     <script type="text/javascript" src="{{ url_for('static', filename='crosswordcreator/game.js') }}"></script>
-</head>
-<body>
-<div class="game-header">
-    <div class="row">
-        <div id="game-meta-info" class="container">
-            <h1>Crossword Creator: <span id="game-name">{{ game_state.game_name }}</span></h1>
-        </div>
-        <div id="top-button-div" class="container">
-            <button id="start-game-button" class="btn btn-success">Start Game</button>
+{% endblock %}
+
+{% block title %}
+    <title>Scrambled Words</title>
+{% endblock %}
+
+{% block content %}
+    <div class="game-header">
+        <div class="row">
+            <div id="game-meta-info" class="container">
+                <h1>Crossword Creator: <span id="game-name">{{ game_state.game_name }}</span></h1>
+            </div>
+            <div id="top-button-div" class="container">
+                <button id="start-game-button" class="btn btn-success">Start Game</button>
+            </div>
         </div>
     </div>
-</div>
 
-<div class="w-100">
-    <div class="row">
-        <div class="col">
-            <hr>
+    <div class="w-100">
+        <div class="row">
+            <div class="col">
+                <hr>
+            </div>
         </div>
     </div>
-</div>
 
-<div id="upper-info-div" class="container-fluid">
-    <div class="row">
-        <div id="primary-info" class="container">
-            <div class="row">
-                Player:&nbsp;<span id="player-name">{{ player_name }}</span>
+    <div id="upper-info-div" class="container-fluid">
+        <div class="row">
+            <div id="primary-info" class="container">
+                <div class="row">
+                    Player:&nbsp;<span id="player-name">{{ player_name }}</span>
+                </div>
+                <div class="row">
+                    Players:&nbsp;<span id="num-players">{{ num_players }}</span>
+                </div>
+                <div class="row">
+                    Tiles Left:&nbsp;<span id="tiles-left">{{ tiles_left }}</span>
+                </div>
             </div>
-            <div class="row">
-                Players:&nbsp;<span id="num-players">{{ num_players }}</span>
+            <div id="message-banner" class="container banner">
+                No messages
             </div>
-            <div class="row">
-                Tiles Left:&nbsp;<span id="tiles-left">{{ tiles_left }}</span>
-            </div>
-        </div>
-        <div id="message-banner" class="container banner">
-            No messages
         </div>
     </div>
-</div>
 
-<div id="button-container" class="container-fluid">
-    <div class="row">
-        <div id="tiles-container" class="container">
-            <div>
-                <p><strong>Tiles:</strong></p>
-            </div>
-            <div id="tiles-div">
-                {% for tile in game_state.player_ids_to_tiles[player_id] %}
-                    <button id="tile-{{ loop.index0 }}" class="btn btn-tile hand-tile btn-light rounded-0">
-                        {{ tile }}
-                    </button>
-                {% endfor %}
-            </div>
-        </div>
-        <div id="inner-button-container" class="container">
-            {% for row in game_state.player_ids_to_boards[player_id].board %}
-                {% set outer_loop = loop %}
-                <div class="row btn-row no-gutters">
-                    {% for tile in row %}
-                        <div class="col">
-                            <button id="space-{{ outer_loop.index0 }}-{{ loop.index0 }}"
-                                    class="btn btn-tile board-tile btn-light btn-block rounded-0">
-                                {% if tile is none %}
-                                    &nbsp;
-                                {% else %}
-                                    {{ tile }}
-                                {% endif %}
-                            </button>
-                        </div>
+    <div id="button-container" class="container-fluid">
+        <div class="row">
+            <div id="tiles-container" class="container">
+                <div>
+                    <p><strong>Tiles:</strong></p>
+                </div>
+                <div id="tiles-div">
+                    {% for tile in game_state.player_ids_to_tiles[player_id] %}
+                        <button id="tile-{{ loop.index0 }}" class="btn btn-tile hand-tile btn-light rounded-0">
+                            {{ tile }}
+                        </button>
                     {% endfor %}
                 </div>
-            {% endfor %}
-        </div>
-        <div id="right-container" class="container">
-            <div class="row right-row">
-                <button id="peel-button" class="btn btn-light" disabled>
-                    Peel
-                </button>
             </div>
-            <div class="row right-row">
-                <button id="exchange-button" class="btn btn-light" disabled>
-                    Exchange for 3 Tiles
-                </button>
+            <div id="inner-button-container" class="container">
+                {% for row in game_state.player_ids_to_boards[player_id].board %}
+                    {% set outer_loop = loop %}
+                    <div class="row btn-row no-gutters">
+                        {% for tile in row %}
+                            <div class="col">
+                                <button id="space-{{ outer_loop.index0 }}-{{ loop.index0 }}"
+                                        class="btn btn-tile board-tile btn-light btn-block rounded-0">
+                                    {% if tile is none %}
+                                        &nbsp;
+                                    {% else %}
+                                        {{ tile }}
+                                    {% endif %}
+                                </button>
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% endfor %}
             </div>
-            <div class="row right-row">
-                <button id="shift-up-button" class="btn btn-light">
-                    <svg width="1.5em" height="2em" viewBox="0 0 16 16" class="bi bi-arrow-down-square-fill"
-                         fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                        <path fill-rule="evenodd"
-                              d="M8 15a.5.5 0 0 0 .5-.5V2.707l3.146 3.147a.5.5 0 0 0 .708-.708l-4-4a.5.5 0 0 0-.708 0l-4 4a.5.5 0 1 0 .708.708L7.5 2.707V14.5a.5.5 0 0 0 .5.5z"></path>
-                    </svg>
-                </button>
-            </div>
-            <div class="row arrow-row">
-                <button id="shift-left-button" class="btn btn-light">
-                    <svg width="1.5em" height="2em" viewBox="0 0 16 16" class="bi bi-arrow-down-square-fill"
-                         fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                        <path fill-rule="evenodd"
-                              d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"></path>
-                    </svg>
-                </button>
-                <button id="shift-right-button" class="btn btn-light">
-                    <svg width="1.5em" height="2em" viewBox="0 0 16 16" class="bi bi-arrow-down-square-fill"
-                         fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                        <path fill-rule="evenodd"
-                              d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z"></path>
-                    </svg>
-                </button>
-            </div>
-            <div class="row arrow-row">
-                <button id="shift-down-button" class="btn btn-light">
-                    <svg width="1.5em" height="2em" viewBox="0 0 16 16" class="bi bi-arrow-down-square-fill"
-                         fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                        <path fill-rule="evenodd"
-                              d="M8 1a.5.5 0 0 1 .5.5v11.793l3.146-3.147a.5.5 0 0 1 .708.708l-4 4a.5.5 0 0 1-.708 0l-4-4a.5.5 0 0 1 .708-.708L7.5 13.293V1.5A.5.5 0 0 1 8 1z"></path>
-                    </svg>
-                </button>
+            <div id="right-container" class="container">
+                <div class="row right-row">
+                    <button id="peel-button" class="btn btn-light" disabled>
+                        Peel
+                    </button>
+                </div>
+                <div class="row right-row">
+                    <button id="exchange-button" class="btn btn-light" disabled>
+                        Exchange for 3 Tiles
+                    </button>
+                </div>
+                <div class="row right-row">
+                    <button id="shift-up-button" class="btn btn-light">
+                        <svg width="1.5em" height="2em" viewBox="0 0 16 16" class="bi bi-arrow-down-square-fill"
+                             fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd"
+                                  d="M8 15a.5.5 0 0 0 .5-.5V2.707l3.146 3.147a.5.5 0 0 0 .708-.708l-4-4a.5.5 0 0 0-.708 0l-4 4a.5.5 0 1 0 .708.708L7.5 2.707V14.5a.5.5 0 0 0 .5.5z"></path>
+                        </svg>
+                    </button>
+                </div>
+                <div class="row arrow-row">
+                    <button id="shift-left-button" class="btn btn-light">
+                        <svg width="1.5em" height="2em" viewBox="0 0 16 16" class="bi bi-arrow-down-square-fill"
+                             fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd"
+                                  d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"></path>
+                        </svg>
+                    </button>
+                    <button id="shift-right-button" class="btn btn-light">
+                        <svg width="1.5em" height="2em" viewBox="0 0 16 16" class="bi bi-arrow-down-square-fill"
+                             fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd"
+                                  d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z"></path>
+                        </svg>
+                    </button>
+                </div>
+                <div class="row arrow-row">
+                    <button id="shift-down-button" class="btn btn-light">
+                        <svg width="1.5em" height="2em" viewBox="0 0 16 16" class="bi bi-arrow-down-square-fill"
+                             fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd"
+                                  d="M8 1a.5.5 0 0 1 .5.5v11.793l3.146-3.147a.5.5 0 0 1 .708.708l-4 4a.5.5 0 0 1-.708 0l-4-4a.5.5 0 0 1 .708-.708L7.5 13.293V1.5A.5.5 0 0 1 8 1z"></path>
+                        </svg>
+                    </button>
+                </div>
             </div>
         </div>
     </div>
-</div>
-</body>
-</html>
+{% endblock %}
