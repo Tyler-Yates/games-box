@@ -68,6 +68,18 @@ def _setup_app(app: Flask):
             if not request.url.endswith("/new_player"):
                 return redirect("/new_player")
 
+    @app.context_processor
+    def inject_global_data():
+        global_data = dict()
+
+        if "player_id" in request.cookies:
+            global_data["player_id"] = request.cookies.get("player_id")
+
+        if "player_name" in request.cookies:
+            global_data["player_name"] = request.cookies.get("player_name")
+
+        return global_data
+
 
 def create_flask_app() -> Flask:
     # Create the flask app

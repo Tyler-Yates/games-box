@@ -1,13 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Game Box</title>
-</head>
-<body>
+{% extends "common/base.html" %}
+
+{% block content %}
     <h1>Game Box</h1>
     <a href="/scrambled_words"><h3>Scrambled Words</h3></a>
     <a href="/hidden_names"><h3>Hidden Names</h3></a>
     <a href="/crossword_creator"><h3>Crossword Creator</h3></a>
-</body>
-</html>
+{% endblock %}
