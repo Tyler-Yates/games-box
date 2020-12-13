@@ -16,6 +16,14 @@ def index():
     return render_template("scrambledwords/index.html")
 
 
+@scrambled_words_blueprint.route("/join_game", methods=["POST"])
+def join_game():
+    if request.form:
+        game_name = request.form.get("game_name")
+        return redirect(url_for(".game_page", game_name=game_name))
+    return "Could not find game!", 404
+
+
 @scrambled_words_blueprint.route("/games/<game_name>")
 def game_page(game_name: str):
     game_state = _get_game_manager().get_game_state(game_name)

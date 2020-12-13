@@ -2,13 +2,6 @@
 
 {% block imports %}
     <link rel="stylesheet" href="{{ url_for('static', filename='scrambledwords/index.css') }}">
-    <script type="text/javascript">
-        function join_game() {
-            event.preventDefault();
-            const game_name = document.getElementById("game_name").value.toUpperCase();
-            window.location.href = `/games/${game_name}`;
-        }
-    </script>
 {% endblock %}
 
 {% block title %}
@@ -35,7 +28,7 @@
                 </form>
             </div>
             <div id="join_game_column" class="col align-self-center text-center">
-                <form onsubmit="join_game()" method="post">
+                <form action="{{ url_for('scrambled_words.join_game') }}" enctype="application/x-www-form-urlencoded" method="post">
                     <div class="form-group">
                         <label for="game_name" class="form-label">Game Name: </label>
                         <input id="game_name" name="game_name" type="text" maxlength="4" class="form-control">
