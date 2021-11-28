@@ -34,3 +34,21 @@ Make sure to run the application with the working directory set at the root of t
 The webapp should be accessible at [https://127.0.0.1:8000]()
 
 You will most likely need to tell your browser to accept the self-signed certificate.
+
+## Dependencies
+This project's dependencies are laid out in the `requirements.in` file in the root of the repo.
+These dependencies are not pinned to a particular version unless absolutely necessary.
+
+To support repeatable builds, the `requirements.in` file is "compiled" to the frozen `requirements.txt` file.
+This file pins every dependency to a particular version.
+
+To update the `requirements.txt` file, use `pip-tools`:
+```
+pip install pip-tools
+pip-compile --output-file=requirements.txt requirements.in
+```
+
+After updating the `requirements.txt` file, you should update your venv:
+```
+pip-sync requirements.txt
+```
