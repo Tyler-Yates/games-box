@@ -6,6 +6,12 @@ This webapp uses Gevent with the Eventlet worker class to run the Flask applicat
 Socketio is used to send messages from client to server.
 
 ## Setup
+
+### Virtual Environment
+Use Poetry to set up the virtual environment:
+`poetry install`
+
+### SSL
 To preserve consistency with running in the cloud, this application uses HTTPS even when running locally.
 You will need to run the following commands from the root of the repo to get ready for HTTPS:
 ```
