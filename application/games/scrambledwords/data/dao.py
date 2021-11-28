@@ -32,7 +32,11 @@ class ScrambledWordsDao:
         self._clean_collection(board_id)
 
     def get_hiscore(self, board_id: str):
-        top_scores = self.scrambled_words_hiscore.find({BOARD_FIELD: board_id}).sort(SCORE_FIELD, direction=DESCENDING).limit(MAX_HI_SCORES)
+        top_scores = (
+            self.scrambled_words_hiscore.find({BOARD_FIELD: board_id})
+            .sort(SCORE_FIELD, direction=DESCENDING)
+            .limit(MAX_HI_SCORES)
+        )
         return top_scores
 
     def _clean_collection(self, board_id: str):
