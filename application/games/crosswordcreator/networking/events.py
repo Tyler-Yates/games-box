@@ -4,9 +4,9 @@ import flask
 from flask import current_app
 from flask_socketio import emit, join_room
 
+from application.constants import CROSSWORD_CREATOR_GAME_MANAGER_CONFIG_KEY
 from application.games.common.player import get_player_id, get_player_name
 from ..data.game_manager import CrosswordCreatorGameManager
-from application import CROSSWORD_CREATOR_GAME_MANAGER_CONFIG_KEY
 from application import socketio
 
 LOG = logging.getLogger("crosswordcreator.events")

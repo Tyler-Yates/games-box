@@ -4,8 +4,9 @@ import flask
 from flask import current_app
 from flask_socketio import emit, join_room
 
-from application import HIDDEN_NAMES_GAME_MANAGER_CONFIG_KEY, HiddenNamesGameManager
 from application import socketio
+from application.constants import HIDDEN_NAMES_GAME_MANAGER_CONFIG_KEY
+from application.games.hiddennames.data.game_manager import HiddenNamesGameManager
 
 LOG = logging.getLogger("hiddennames.events")
 
