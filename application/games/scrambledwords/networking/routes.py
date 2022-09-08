@@ -2,7 +2,7 @@ import logging
 
 from flask import current_app, redirect, render_template, request, url_for
 
-from application.constants import SCRAMBLED_WORDS_GAME_MANAGER_CONFIG_KEY
+from application import SCRAMBLED_WORDS_GAME_MANAGER_CONFIG_KEY
 from ..data.game_manager import ScrambledWordsGameManager
 from ..data.scoring_type import ScoringType
 from . import scrambled_words_blueprint

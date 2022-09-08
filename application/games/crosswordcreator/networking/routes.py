@@ -2,7 +2,7 @@ import logging
 
 from flask import current_app, redirect, render_template, request, url_for
 
-from application.constants import CROSSWORD_CREATOR_GAME_MANAGER_CONFIG_KEY
+from application import CROSSWORD_CREATOR_GAME_MANAGER_CONFIG_KEY
 from application.games.common.player import get_player_id, get_player_name
 from . import crossword_creator_blueprint
 from ..data.game_manager import CrosswordCreatorGameManager

@@ -1,6 +1,6 @@
 from flask import current_app, redirect, render_template, url_for, request
 
-from application.constants import HIDDEN_NAMES_GAME_MANAGER_CONFIG_KEY
+from application import HIDDEN_NAMES_GAME_MANAGER_CONFIG_KEY
 from . import hidden_names_blueprint
 from ..data.game_manager import HiddenNamesGameManager
 

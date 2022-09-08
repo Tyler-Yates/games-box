@@ -4,10 +4,9 @@ import flask
 from flask import current_app
 from flask_socketio import emit, join_room
 
+from application import ScrambledWordsGameManager, SCRAMBLED_WORDS_GAME_MANAGER_CONFIG_KEY
 from application import socketio
-from application.constants import SCRAMBLED_WORDS_GAME_MANAGER_CONFIG_KEY
 from application.games.common.player import get_player_name, get_player_id
-from application.games.scrambledwords.data.game_manager import ScrambledWordsGameManager
 from application.games.scrambledwords.data.scoring_type import ScoringType
 
 LOG = logging.getLogger("scrambledwords.events")

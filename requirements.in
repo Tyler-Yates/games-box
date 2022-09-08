@@ -1,4 +1,6 @@
 Flask
+# TODO change this once gunicorn releases the fix as a new version
+git+https://github.com/benoitc/gunicorn@ff58e0c6da83d5520916bc4cc109a529258d76e1#egg=gunicorn==20.1.0
 flask-socketio
 eventlet
 pymongo
