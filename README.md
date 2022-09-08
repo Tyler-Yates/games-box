@@ -2,8 +2,8 @@
 A collection of simple web games.
 
 ## Technologies
-This webapp uses Gevent with the Eventlet worker class to run the Flask application.
-Socketio is used to send messages from client to server.
+This webapp is a Flask application.
+Socketio is used to send messages from client to server as well as run the webserver.
 
 ## Setup
 To preserve consistency with running in the cloud, this application uses HTTPS even when running locally.
@@ -22,16 +22,11 @@ After generating the key and certificate, you are ready to run the application.
 ## Running the application
 Your run configuration should look like the following:
 ```
-venv/bin/gunicorn \
-    --certfile=ssl/server.crt \
-    --keyfile=ssl/server.key \
-    --worker-class eventlet \
-    -w 1 \
-    "application:create_flask_app()"
+python3 -m application
 ```
 Make sure to run the application with the working directory set at the root of the repo.
 
-The webapp should be accessible at [https://127.0.0.1:8000]()
+The webapp should be accessible at [https://127.0.0.1:5000]()
 
 You will most likely need to tell your browser to accept the self-signed certificate.
 
