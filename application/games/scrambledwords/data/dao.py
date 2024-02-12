@@ -40,10 +40,10 @@ class ScrambledWordsDao:
         return top_scores
 
     def _clean_collection(self, board_id: str):
-        while self.scrambled_words_hiscore.find({BOARD_FIELD: board_id}).count() > MAX_HI_SCORES:
+        while self.scrambled_words_hiscore.count_documents({BOARD_FIELD: board_id}) > MAX_HI_SCORES:
             lowest_score_doc = (
                 self.scrambled_words_hiscore.find({BOARD_FIELD: board_id})
                 .sort(SCORE_FIELD, direction=ASCENDING)
                 .limit(1)
-            )
+            )[0]
             self.scrambled_words_hiscore.delete_one({BOARD_FIELD: board_id, SCORE_FIELD: lowest_score_doc[SCORE_FIELD]})

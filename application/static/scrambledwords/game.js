@@ -1,7 +1,7 @@
 let expireTimeMillis = null;
 
 $(document).ready(function () {
-    const socket = io.connect('https://' + document.domain + ':' + location.port);
+    const socket = io.connect('//' + document.domain + ':' + location.port);
 
     const roomName = document.getElementById('game-name').innerHTML;
 

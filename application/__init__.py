@@ -4,8 +4,8 @@ from flask import Flask, request, redirect
 from flask_socketio import SocketIO
 
 from .games.common import common_blueprint
-from .games.crosswordcreator.data.game_manager import CrosswordCreatorGameManager
 from .games.common.word_manager import WordManager
+from .games.crosswordcreator.data.game_manager import CrosswordCreatorGameManager
 from .games.hiddennames.data.game_manager import HiddenNamesGameManager
 from .games.scrambledwords.data.game_manager import ScrambledWordsGameManager
 
@@ -17,8 +17,6 @@ socketio = SocketIO()
 
 LOG = logging.getLogger("__init__")
 logging.basicConfig(level=logging.INFO)
-logging.getLogger("engineio.server").setLevel(logging.WARNING)
-logging.getLogger("socketio.server").setLevel(logging.WARNING)
 
 
 def _setup_scrambled_words(app: Flask):
@@ -57,12 +55,6 @@ def _setup_app(app: Flask):
 
     @app.before_request
     def before_request():
-        # Redirect to HTTPS automatically
-        if request.url.startswith("http://"):
-            url = request.url.replace("http://", "https://", 1)
-            code = 301
-            return redirect(url, code=code)
-
         # Ensure players create an ID cookie
         if ("player_id" not in request.cookies) or ("player_name" not in request.cookies):
             if ("vendor" not in request.url) and (not request.url.endswith("/new_player")):
