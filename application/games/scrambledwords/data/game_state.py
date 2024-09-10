@@ -5,7 +5,6 @@ from threading import Timer
 from typing import List, Set, Dict, Optional
 
 from application.games.common.word_manager import WordManager
-from application.games.scrambledwords.data.dao import ScrambledWordsDao, PLAYER_FIELD, SCORE_FIELD
 from .scoring import Scoring
 from .scoring_type import ScoringType
 from ..util.time_util import get_time_millis
@@ -25,7 +24,6 @@ class GameState:
         self,
         game_name: str,
         word_manager: WordManager,
-        dao: ScrambledWordsDao,
         scoring_type: ScoringType = ScoringType.CLASSIC,
         game_timer: bool = True,
     ):
@@ -35,15 +33,14 @@ class GameState:
         self.game_timer = game_timer
         self.game_name = game_name
         self.word_manager = word_manager
-        self.dao = dao
         self.scoring_type = scoring_type
 
         self.game_tiles: List[str] = []
-        self.expire_time: int = None
+        self.expire_time: Optional[int] = None
         self.valid_guesses: Dict[str, Set[str]] = {}
         self.word_counter: Counter = Counter()
         self.game_running = False
-        self.end_game_timer: Timer = None
+        self.end_game_timer: Optional[Timer] = None
 
         self.scores: Dict[str, int] = {}
         self.player_ids_to_names: Dict[str, str] = {}
@@ -194,13 +191,6 @@ class GameState:
         else:
             self.scores[player_id] = round_score
 
-        # If there was a score, record it in the database
-        if (round_score > 0) and (self.dao is not None):
-            try:
-                self.dao.record_score(self.get_board_id(), round_score, player_name)
-            except Exception:
-                LOG.exception("Could not save score to database.")
-
         # Send the JSON data back to the player
         return {
             "scored_words": scored_words,
@@ -210,18 +200,8 @@ class GameState:
             "total_score": self.scores[player_id],
         }
 
-    def get_hiscore_update(self) -> Dict[str, List[str]]:
-        names = []
-        scores = []
-        hiscore_docs = self.dao.get_hiscore(self.get_board_id())
-        for doc in hiscore_docs:
-            names.append(doc[PLAYER_FIELD])
-            scores.append(doc[SCORE_FIELD])
-
-        return {"names": names, "scores": scores}
-
     def _word_is_on_board(self, guessed_word: str) -> Optional[List[int]]:
-        possible_paths: List[List[int]] = None
+        possible_paths: Optional[List[List[int]]] = None
 
         # Iterate through each character of the guessed word
         for character in guessed_word:
