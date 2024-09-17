@@ -13,6 +13,10 @@
         </div>
         <div class="row">
             <div class="col text-center">
+                <a href="{{ url_for('scorekeeper.index') }}"><img src="{{ url_for('static', filename='common/scorekeeper.png') }}" width="300" height="300"></a>
+                <a href="{{ url_for('scorekeeper.index') }}"><h3>Score Keeper</h3></a>
+            </div>
+            <div class="col text-center">
                 <a href="{{ url_for('scrambled_words.index') }}"><img src="{{ url_for('static', filename='common/scrambled_words.png') }}" width="300" height="300"></a>
                 <a href="{{ url_for('scrambled_words.index') }}"><h3>Scrambled Words</h3></a>
             </div>

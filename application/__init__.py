@@ -49,6 +49,12 @@ def _setup_crossword_creator(app: Flask):
     app.register_blueprint(crossword_creator_blueprint, url_prefix="/crossword_creator/")
 
 
+def _setup_scorekeeper(app: Flask):
+    from application.games.scorekeeper.networking import scorekeeper_blueprint as scorekeeper_blueprint
+
+    app.register_blueprint(scorekeeper_blueprint, url_prefix="/scorekeeper/")
+
+
 def _setup_app(app: Flask):
     app.register_blueprint(common_blueprint, url_prefix="/")
     app.config["SEND_FILE_MAX_AGE_DEFAULT"] = 60
@@ -82,6 +88,7 @@ def create_flask_app() -> Flask:
     _setup_scrambled_words(app)
     _setup_hidden_names(app)
     _setup_crossword_creator(app)
+    _setup_scorekeeper(app)
 
     socketio.init_app(app)
 

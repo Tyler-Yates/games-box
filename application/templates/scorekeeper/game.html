@@ -1,0 +1,103 @@
+{% extends "common/base.html" %}
+
+{% block imports %}
+<link rel="stylesheet" href="{{ url_for('static', filename='scorekeeper/game.css') }}">
+{% endblock %}
+
+{% block title %}
+<title>Score Keeper</title>
+{% endblock %}
+
+{% block content %}
+    <table id="scoreTable">
+        <thead>
+        <tr id="playersRow">
+            {% for i in range(1, num_players + 1) %}
+            <th contenteditable="true" style="cursor: text;">Player {{ i }}</th>
+            {% endfor %}
+        </tr>
+        </thead>
+        <tbody>
+        <tr id="totalsRow">
+            {% for i in range(num_players) %}
+            <td>Total: 0</td>
+            {% endfor %}
+        </tr>
+
+        <!-- Start with 10 empty rows -->
+        {% for _ in range(10) %}
+        <tr class="scoreRow">
+            {% for i in range(num_players) %}
+            <td><input type="number" min="0" oninput="handleInputChange()"></td>
+            {% endfor %}
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <script>
+        function updateTotals() {
+            const table = document.getElementById('scoreTable');
+            const totalsRow = table.rows[1]; // The second row is the totals row
+            const rows = table.rows.length;
+            const numPlayers = totalsRow.cells.length;
+
+            // Reset totals
+            let totals = Array(numPlayers).fill(0);
+
+            // Loop through all score rows
+            for (let i = 2; i < rows; i++) {
+                const scoreRow = table.rows[i];
+                for (let j = 0; j < numPlayers; j++) {
+                    const scoreCell = scoreRow.cells[j].querySelector('input');
+                    const value = parseInt(scoreCell.value) || 0; // Handle empty or invalid values
+                    totals[j] += value;
+                }
+            }
+
+            // Update totals row with "Total: " before the value
+            for (let j = 0; j < numPlayers; j++) {
+                totalsRow.cells[j].textContent = 'Total: ' + totals[j];
+            }
+        }
+
+        function handleInputChange() {
+            updateTotals();
+
+            // Check if the last row has any content
+            const table = document.getElementById('scoreTable');
+            const lastRow = table.rows[table.rows.length - 1];
+            const numPlayers = lastRow.cells.length;
+
+            let isEmpty = true;
+            for (let i = 0; i < numPlayers; i++) {
+                const inputValue = lastRow.cells[i].querySelector('input').value;
+                if (inputValue !== "") {
+                    isEmpty = false;
+                    break;
+                }
+            }
+
+            // If the last row has content, add a new empty row
+            if (!isEmpty) {
+                addRow();
+            }
+        }
+
+        function addRow() {
+            const table = document.getElementById('scoreTable');
+            const newRow = table.insertRow(-1); // Insert at the end
+            const numPlayers = table.rows[0].cells.length;
+
+            // Add a cell for each player
+            for (let i = 0; i < numPlayers; i++) {
+                const newCell = newRow.insertCell(i);
+                const input = document.createElement('input');
+                input.type = 'number';
+                input.min = '0';
+                input.oninput = handleInputChange; // Trigger row addition when content is entered
+                newCell.appendChild(input);
+            }
+        }
+    </script>
+{% endblock %}

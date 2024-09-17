@@ -1,0 +1,24 @@
+{% extends "common/base.html" %}
+
+{% block imports %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='scorekeeper/index.css') }}">
+{% endblock %}
+
+{% block title %}
+    <title>Score Keeper</title>
+{% endblock %}
+
+{% block content %}
+    <h2>Select Number of Players</h2>
+    <label for="numPlayers">Number of Players:</label>
+    <input type="number" id="numPlayers" min="1" max="10" value="2">
+    <button onclick="redirectToScorePage()">Start Game</button>
+
+    <script>
+        function redirectToScorePage() {
+            const numPlayers = document.getElementById('numPlayers').value;
+            const currentUrl = window.location.origin + window.location.pathname;
+            window.location.href = currentUrl.endsWith('/') ? currentUrl + numPlayers : currentUrl + '/' + numPlayers;
+        }
+    </script>
+{% endblock %}
