@@ -17,6 +17,7 @@ th, td {
     border: 1px solid black;
     padding: 10px;
     text-align: center;
+    min-width: 80px;
 }
 
 thead {
@@ -41,4 +42,12 @@ input[type="text"], input[type="number"] {
 button {
     display: block;
     margin: 10px auto;
+}
+
+/* Responsive styling for mobile devices */
+@media (max-width: 768px) { /* Adjust the max-width value as needed for your layout */
+    table {
+        width: 90%; /* 90% width on mobile devices */
+        margin: 0 auto; /* Center the table horizontally */
+    }
 }
