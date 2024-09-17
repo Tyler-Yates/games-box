@@ -1,0 +1,48 @@
+input[type="text"], input[type="number"] {
+    box-shadow: none; /* Remove default shadows */
+    border: 1px solid #ccc; /* Light border color */
+    background-color: #fff; /* White background for contrast */
+    color: #000; /* Black text for readability */
+    padding: 5px;
+    text-align: center;
+}
+
+/* Define variables for button colors */
+:root {
+    --button-bg-color-light: #007bff; /* Blue background for light mode */
+    --button-text-color-light: #ffffff; /* White text for light mode */
+    --button-bg-color-dark: #0056b3; /* Darker blue background for dark mode */
+    --button-text-color-dark: #ffffff; /* White text for dark mode */
+    --button-border-color: transparent; /* Border color */
+    --button-hover-bg-color-light: #0056b3; /* Darker blue for hover in light mode */
+    --button-hover-bg-color-dark: #003d7a; /* Even darker blue for hover in dark mode */
+}
+
+/* Basic button styling */
+button {
+    background-color: var(--button-bg-color-light); /* Default background */
+    color: var(--button-text-color-light); /* Default text color */
+    border: 1px solid var(--button-border-color); /* Border */
+    padding: 10px 20px; /* Padding */
+    border-radius: 5px; /* Rounded corners */
+    font-size: 16px; /* Font size */
+    cursor: pointer; /* Pointer cursor on hover */
+    transition: background-color 0.3s ease, color 0.3s ease; /* Smooth transition */
+}
+
+/* Hover effect */
+button:hover {
+    background-color: var(--button-hover-bg-color-light); /* Hover background */
+}
+
+/* Dark mode specific styles */
+@media (prefers-color-scheme: dark) {
+    button {
+        background-color: var(--button-bg-color-dark); /* Dark mode background */
+        color: var(--button-text-color-dark); /* Dark mode text color */
+    }
+
+    button:hover {
+        background-color: var(--button-hover-bg-color-dark); /* Dark mode hover background */
+    }
+}
